@@ -1,0 +1,41 @@
+---
+title: "Log-normal Distribution"
+author: "Brandon Parmanand"
+date: "july, 29 2022"
+output: html_document
+---
+### Assignment:
+#### Find some data online that includes money, prices, expenses, etc.
+#### Plot the histogram of your data.
+#### Use your data to estimate the parameters of a log-normal distribution.
+#### Plot the estimated density of your log-normal distribution.
+#### How does your data compare to your density?
+
+
+```{r}
+housing.df <- read.csv("Groveland.csv", header = TRUE)
+library(readr)
+
+Price <- parse_number(housing.df$Current.Price)
+
+
+hist(Price, main = "Selling Price of Homes ")
+
+dlnorm_x <- dlnorm(
+  x = Price,
+  meanlog = 0,
+  sdlog = 1,
+  log = FALSE
+)
+plot(
+  x = Price,
+  y = dlnorm_x,
+  main = "Density of standard log-normal",
+  type = "l"
+)
+
+```
+
+### The data compares well to the density plot. Data is skewed to the left.
+
+

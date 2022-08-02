@@ -1,0 +1,110 @@
+---
+title: "Gamma Distribution"
+author: "Brandon Parmanand"
+date: "july, 29 2022"
+output: html_document
+---
+### For this assignment you are going to simulate data from a gamma random variable, then analyze the data (pretending you do not know that the data is gamma.)
+
+### Use runif() and qexp() to randomly generate 100 exponential random variables with parameter = 10. Do not use rexp().
+
+### se runif() and qgamma() to randomly generate 100 gamma random variables with parameters = 10 and 10. Do not use rgamma().
+
+### Use runif() and qnorm() to randomly generate 100 standard normal random variables. Do not use rnorm().
+
+### Use runif() and qlnorm() to randomly generate 100 standard log-normal random variables. Do not use rlnorm().
+
+
+```{r}
+
+x <- runif(
+  n = 100,
+  min = 0,
+  max = 1
+)
+
+
+
+qexp(
+  p = c(
+    0,0.25,0.5,0.75,1
+  ),
+  rate = 1
+)
+
+
+v_rgamma <- rgamma(
+  n = 100,
+  shape = 5,
+  rate = 2
+)
+hist(
+  x = v_rgamma,
+  main = "histogram of randomly generated gamma random variables"
+)
+
+
+```
+
+### Compute mean() and var() of your data. Use the gamma population mean and population variance to estimate the parameters of the gamma distribution.
+
+```{r}
+gamma_mean <- mean(v_rgamma)
+gamma_var <- var(v_rgamma)
+
+alpha <- (gamma_mean^2)/gamma_var
+beta <- (gamma_mean/gamma_var)
+```
+
+### Use dgamma() to get the density for the values in [0, 5*x_bar]. Plot the density.
+
+```{r}
+x <- seq(
+  from = 0,
+  to = 5*gamma_mean,
+  by = 0.001
+)
+dgamma_x <- dgamma(
+  x = x,
+  shape = alpha,
+  rate = beta
+)
+plot(
+  x = x,
+  y = dgamma_x,
+  main = "probability density function of a gamma random variable",
+  type = "l"
+)
+
+```
+
+### Use pgamma() to get the cumulative distribution for the values in [0, 5*x_bar]. Plot the cdf.
+
+```{r}
+pgamma_x <- pgamma(
+  q = x,
+  shape = alpha,
+  rate = beta
+)
+plot(
+  x = x,
+  y = pgamma_x,
+  main = "cumulative distribution function of a gamma random variable",
+  type = "l"
+)
+
+```
+
+### Use qgamma() to get the quantile of your density. 0,0.25,0.5,0.75,1
+
+```{r}
+qgamma(
+  p = c(
+    0,0.25,0.5,0.75,1
+  ),
+  shape = alpha,
+  rate = beta
+)
+
+```
+

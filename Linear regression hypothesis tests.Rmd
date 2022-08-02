@@ -1,0 +1,152 @@
+---
+title: " linear regression hypothesis tests"
+author: "Brandon Parmanand"
+date: "July 31, 2022"
+output: html_document
+---
+### Take your multiple linear regression model from your previous assignment.
+
+### Run the hypothesis tests from the video that use summary() and anova().
+
+### For each hypothesis test:
+
+### State your hypotheses, Ho and Ha.
+### State your conclusion in terms of failing to reject the null hypothesis, and reject the null hypothesis in favor of the alternative. (small p-value leads to rejecting the null)
+### State your conclusion in plain language (how you would state your conclusion to a non-statistician)
+
+```{r}
+options(
+  digits = 2
+)
+```
+
+# Load the data
+
+
+```{r}
+setwd("C:/Users/brand/OneDrive/Documents/GitHub/Prob&Stats")
+getwd()
+
+movies <- read.csv("movies.csv")
+movies <- na.omit(movies)
+# rownames(movies) <- movies$title
+head(movies)
+movies$binary_best_pic_nom <- ifelse(movies$best_pic_nom=="yes",1,0)
+lm_4 <- lm(
+  formula = audience_score~imdb_rating+runtime+critics_score+imdb_num_votes+binary_best_pic_nom,
+  data = movies
+)
+
+lm_3 <- update(
+  object = lm_4,
+  formula = ~. - binary_best_pic_nom
+)
+
+```
+
+
+
+
+```{r}
+summary(
+  object = lm_4
+)
+anova(
+  object = lm_4
+)
+```
+
+
+# Is there something in the model bringing value?
+
+For this test, we want to see if one or more of the predictor variables are useful in modeling the target variable.
+
+$$\begin{align}
+Ho:& \beta_1 = \beta_2 = \beta_3 = ... = \beta_p = 0 \\
+Ha:& \text{One or more slopes do not equal zero.}
+\end{align}$$
+
+
+Reject the null hypothesis in favor of the alternative. I conclude that one or more slopes are not equal to 0. The p-value is very small
+We are saying that one or more of the predictor variables are bringing value to the model.
+
+
+# Which predictors are bringing value to the model?
+
+We can evaluate each coefficient using hypothesis testing. If a coefficient is non-zero, then we conclude that the predictor variable is bringing informative value in modeling the target variable.
+
+$$\begin{align}
+Ho:& \beta_j = 0 \\
+Ha:& \beta_j \ne 0
+\end{align}$$
+
+Use the coefficient $Pr(>|t|)$ to evaluate each hypothesis test.
+
+imdb_rating - p value small, Reject null hypothesis in favor of the alternative. I conclude it is not = 0        
+runtime - p value small, Reject null hypothesis in favor of the alternative. I conclude it is not = 0            
+critics_score - p value small, Reject null hypothesis in favor of the alternative. I conclude it is not = 0       
+imdb_num_votes  - Fail to reject the null hpyothesis. I conclude this predictor coefficient is = 0       
+binary_best_pic_nom - Fail to reject the null hpyothesis. I conclude this predictor coefficient is = 0 
+
+Using this hypothesis tests, i can see which predictors are bringing value to the model. We may be able to remove some predictors that are not bringing sufficient value
+
+# Should I use a simplier model?
+
+Here we compare models to see if they are equally informative.
+
+$$\begin{align}
+Ho:& \text{The models are equally informative (use simplier model)} \\
+Ha:& \text{The models are not equally informative (use more complicated model)}
+\end{align}$$
+
+We have two way of comparing models.
+
+* Compare models were predictors are sequentially added to a simplier model
+* Compare two models of interest
+
+## Sequential models
+
+```{r}
+
+anova(
+  object = lm_4
+)
+```
+For imbd_rating critics_score, and runtime the p value is small.Reject null hypothesis in favor of the alternative. imbd_num_votes and binary_best_pic_nom are both greater than the test statistic. Fail to reject the null hypthesis
+These two predictor variables do not bring as much value as the frst three variables. Can create new model with reduced predictors
+## Compare two specific models 
+
+```{r}
+anova(
+  lm_3,lm_4
+)
+```
+Fail to reject the null hypothesis. The reduced model LM3 brings the same value the full model LM4
+
+
+
+```{r}
+car::linearHypothesis(
+  model = lm_4,
+  hypothesis.matrix = diag(6),
+  rhs = c(-31,10,0,0,0,4)
+)
+```
+
+Reject the null hypothesis. This hypothesis test concludes these models are different than the LM4
+
+```{r}
+car::linearHypothesis(
+  model = lm_4,
+  hypothesis.matrix = diag(6),
+  rhs = c(-31,10,0,0,0,4),
+  test = "Chisq"
+)
+```
+
+Reject the null hypothesis. This hypothesis test concludes these models are different than the LM4
+
+
+
+
+

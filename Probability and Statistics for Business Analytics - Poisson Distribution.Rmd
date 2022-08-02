@@ -1,0 +1,145 @@
+---
+title: "Probability and Statistics for Business Analytics - Poisson Distribution"
+author: "Aaron Smith"
+date: "May 20, 2021"
+output: html_document
+---
+
+Consider the number of accidents at an intersection during a time period. Let's assume that two or more accidents cannot occur at exactly the same time. Notice that the number of accidents starts at zero, then becomes one, then two,.... If the number of accidents during two separate time intervals are independent, then we can model this with a Poisson distribution.
+
+Notice the difference with binomial random variables. The number of successes in a binomial random variable is capped by the number of trials, and the successes can all happen at the same time.
+
+Poisson random variables, potentially, have no upper bound.
+
+$$\begin{align}
+P(X = x) =& \dfrac{e^{-\lambda}\lambda^x}{x!}, x = 0,1,2,3,...\\
+\lambda \in&  (0,\infty) \\ 
+E(X) =& \lambda \\ 
+V(X) =& \lambda
+\end{align}$$
+
+$\lambda$ is the average number of occurrences in one time period. If the average number of occurences is constant, and occurences are independent, we can proportionally change the length to time by $t$, and the new average number of occurrences will be $\lambda t$
+
+# Does this define a probability?
+
+To check that this defines a probability, first notice that the fraction is always positive. Next recall the Maclaurin series of the exponential function.
+
+$$\begin{align}
+e^\lambda =& \sum_{x = 0}^{\infty}\dfrac{\lambda^x}{x!} \\
+1 =& \sum_{x = 0}^{\infty}\dfrac{e^{-\lambda}\lambda^x}{x!}
+\end{align}$$
+
+# Expected value
+
+$$\begin{align}
+E(X) =& \sum_{x = 0}^{\infty}x\dfrac{e^{-\lambda}\lambda^x}{x!} \\
+ =& e^{-\lambda}\lambda\sum_{x = 0}^{\infty}\dfrac{1}{x!}x\lambda^{x-1} \\
+ =& e^{-\lambda}\lambda\sum_{x = 0}^{\infty}\dfrac{1}{x!}\dfrac{d}{d\lambda}\lambda^{x} \\
+ =& e^{-\lambda}\lambda\dfrac{d}{d\lambda}\sum_{x = 0}^{\infty}\dfrac{\lambda^{x}}{x!} \\
+ =& e^{-\lambda}\lambda\dfrac{d}{d\lambda}e^\lambda \\
+ =& e^{-\lambda}\lambda e^\lambda \\
+ =& \lambda
+\end{align}$$
+
+# Variance
+
+To compute the variance of a Poisson random variable, let's take advantage of the formula
+
+$$V(X) = E(X(X - 1)) + E(X) - E(X)^2$$
+
+We have that $E(X) = \lambda$, let's compute $E(X(X - 1))$.
+
+$$\begin{align}
+E(X(X - 1))  =& \sum_{x = 0}^{\infty}x(x - 1)\dfrac{e^{-\lambda}\lambda^x}{x!} \\
+  =& e^{-\lambda}\lambda^2\sum_{x = 0}^{\infty}\dfrac{1}{x!}x(x - 1)\lambda^{x-2} \\
+  =& e^{-\lambda}\lambda^2\sum_{x = 0}^{\infty}\dfrac{1}{x!}\dfrac{d}{d\lambda}\lambda^{x} \\
+  =& e^{-\lambda}\lambda^2\dfrac{d}{d\lambda}\sum_{x = 0}^{\infty}\dfrac{\lambda^{x}}{x!} \\
+  =& e^{-\lambda}\lambda^2\dfrac{d}{d\lambda}e^\lambda \\
+  =& e^{-\lambda}\lambda^2e^\lambda \\
+  =& \lambda^2 \\
+\end{align}$$
+
+Now let's get the variance using the expected values.
+
+$$\begin{align}
+V(X) =& E(X(X - 1)) + E(X) - E(X)^2 \\
+ =& \lambda^2 + \lambda - \lambda^2 \\
+ =& \lambda
+\end{align}$$
+
+# Constructing the Poisson distribution with the binomial distribution
+
+Consider counting the number of incidents over a time period. Chop up the interval of time into $n$ equal length subintervals so that we can only get at most one incident per subinterval. Let success be an incident during a subinterval, failure means no incident during that subinterval. Let's assume success/failure are independent and identically distributed.This defines a binomial random variable.
+
+If $\lambda$ is the expected number of incidents over the entire interval, then
+$$\begin{align}
+np =& \lambda \\ 
+p =& \dfrac{\lambda}{n} \\
+P(X = x) =& \binom{n}{x}\left(\dfrac{\lambda}{n}\right)^x\left(1 - \dfrac{\lambda}{n}\right)^{n-x}
+\end{align}$$
+
+Consider making the subintervals smaller, and there are more subintervals. Consider taking the limit as $n \rightarrow \infty$.
+
+$$\begin{align}
+\lim_{n \rightarrow \infty} P(X = x) =& \lim_{n \rightarrow \infty} \binom{n}{x}\left(\dfrac{\lambda}{n}\right)^x\left(1 - \dfrac{\lambda}{n}\right)^{n-x} \\ 
+=& \lim_{n \rightarrow \infty} \dfrac{\lambda^x}{x!}\left(1 - \dfrac{\lambda}{n}\right)^n\dfrac{n(n-1)...(n-x+1)}{n^x}\left(1 - \dfrac{\lambda}{n}\right)^{-x} \\
+=& \dfrac{\lambda^x}{x!} \lim_{n \rightarrow \infty} \left(1 - \dfrac{\lambda}{n}\right)^n\left(1 - \dfrac{\lambda}{n}\right)^{-x}\left(1 - \dfrac{0}{n}\right)\left(1 - \dfrac{1}{n}\right)\left(1 - \dfrac{2}{n}\right)...\left(1 - \dfrac{y-1}{n}\right) \\
+=& \dfrac{\lambda^x}{x!} \lim_{n \rightarrow \infty} \left(1 - \dfrac{\lambda}{n}\right)^n\lim_{n \rightarrow \infty}\left(1 - \dfrac{\lambda}{n}\right)^{-x}\lim_{n \rightarrow \infty}\left(1 - \dfrac{0}{n}\right)\lim_{n \rightarrow \infty}\left(1 - \dfrac{1}{n}\right)\lim_{n \rightarrow \infty}\left(1 - \dfrac{2}{n}\right)...\lim_{n \rightarrow \infty}\left(1 - \dfrac{y-1}{n}\right) \\
+=& \dfrac{\lambda^x}{x!} e^{-\lambda}\times1\times1\times1\times1\times...\times1 \\
+=& \dfrac{\lambda^x}{x!} e^{-\lambda}
+\end{align}$$
+
+When $n$ is large and $p$ is small, we can approximate the binomial distribution with a Poisson distribution with $\lambda = np$. Notice that when $p$ is small, $1 - p \approx 1$. The variance of a binomial random variable is
+$$np(1 - p) \approx np = \lambda$$
+
+# The Poisson distribution in R
+
+* x vector of (non-negative integer) quantiles.
+* q vector of quantiles.
+* p vector of probabilities.
+* n number of random values to return.
+* lambda vector of (non-negative) means
+
+```{r}
+options(
+  digits = 2
+)
+```
+
+# Density of a Poisson distribution
+
+```{r}
+dpois(
+  x = 0:10,
+  lambda = 5
+)
+```
+
+# Cumulative distribution function of a Poisson distribution
+
+```{r}
+ppois(
+  q = 0:10,
+  lambda = 5
+)
+```
+
+# Quantiles of a Poisson distribution
+
+```{r}
+qpois(
+  p = c(
+    0,0.25,0.5,0.75,1
+  ),
+  lambda = 5
+)
+```
+
+# Random generation of a Poisson distribution
+
+```{r}
+rpois(
+  n = 100,
+  lambda = 5
+)
+```

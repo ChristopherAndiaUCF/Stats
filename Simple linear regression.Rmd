@@ -1,0 +1,183 @@
+---
+title: "A first linear model"
+author: "Brandon Parmanand"
+date: "July 31, 2022"
+output: html_document
+---
+
+
+# Set up the work space
+
+First I want to reduce the number of displayed digits.
+
+```{r}
+options(
+  digits = 2
+)
+```
+
+# Load the data
+
+
+```{r}
+setwd("C:/Users/brand/OneDrive/Documents/GitHub/Prob&Stats")
+getwd()
+
+movies <- read.csv("movies.csv")
+```
+
+Let's look at our data.
+
+```{r}
+head(movies)
+summary(
+  object = movies
+)
+```
+
+This is a regression class, so let's plot a scatter plot. We do this to see if building a regression model is reasonable.
+
+```{r}
+par(
+  mfrow=c(1,1)
+)
+plot(
+  x = movies$critics_score,
+  y = movies$audience_score,
+  xlab="Rotten Tomatoes Critics Score", 
+  ylab="Rotten Tomatoes Audience Score"
+)
+```
+
+# A simple linear regression model
+
+Let's build a simple linear regression model.
+
+```{r}
+lm_movies <- lm(
+  formula = audience_score~critics_score,
+  data = movies
+)
+```
+
+Now let's put the linear model on our scatter plot to see if the model is reasonable.
+
+```{r}
+plot(
+  x = movies$critics_score,
+  y = movies$audience_score,
+  xlab="Rotten Tomatoes Critics Score", 
+  ylab="Rotten Tomatoes Audience Score"
+)
+abline(
+  reg = lm_movies,
+  col = "red"
+)
+```
+
+# Hypothesis testing
+
+Hypothesis testing is critical to small data analytics. anova() and summary() give us the most important tests for linear regression.
+
+```{r}
+anova(
+  object = lm_movies
+)
+summary(
+  object = lm_movies
+)
+```
+
+Let's check those t-values from the summary() output.
+
+```{r}
+33.43551/1.27561
+0.50144/0.01984
+
+```
+
+# Confidence intervals for the coefficients
+
+Now let's look at confidence intervals for the coefficients.
+
+```{r}
+confint(
+  object = lm_movies,
+  level=0.95
+)
+```
+
+# Expected values and predictions
+
+```{r}
+score_data <- data.frame(
+  critics_score = seq(
+    from = min(movies$critics_score),
+    to = max(movies$critics_score),
+    by = 5
+  )
+)
+head(score_data)
+
+predict_none <- predict(
+  object = lm_movies,
+  newdata = score_data,
+  interval = "none",
+  level=0.95
+)
+head(predict_none)
+
+predict_confidence <- predict(
+  object = lm_movies,
+  newdata = score_data,
+  interval = "confidence",
+  level=0.95
+)
+head(predict_confidence)
+
+predict_prediction <- predict(
+  object = lm_movies,
+  newdata = score_data,
+  interval = "prediction",
+  level=0.95
+)
+head(predict_prediction)
+```
+
+Now let's add the 
+expected values/predictions (red),
+expected value confidence intervals (blue),
+prediction intervals (purple).
+
+```{r}
+plot(
+  x = movies$critics_score,
+  y = movies$audience_score,
+  xlab="Rotten Tomatoes Critics Score", 
+  ylab="Rotten Tomatoes Audience Score"
+)
+abline(
+  reg = lm_movies,
+  col = "red"
+)
+lines(
+  x = score_data$critics_score,
+  y = predict_confidence[,"lwr"],
+  col = "blue"
+)
+lines(
+  x = score_data$critics_score,
+  y = predict_confidence[,"upr"],
+  col = "blue"
+)
+lines(
+  x = score_data$critics_score,
+  y = predict_prediction[,"lwr"],
+  col = "purple"
+)
+lines(
+  x = score_data$critics_score,
+  y = predict_prediction[,"upr"],
+  col = "purple"
+)
+```

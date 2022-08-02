@@ -1,0 +1,283 @@
+---
+title: "F-distribution"
+author: "Brandon Parmanand"
+date: "july, 30 2022"
+output: html_document
+---
+### Assignment:
+#### Simulate taking random samples of independent identically distributed random variables. In the code, each row of M_1 is a sample; each row of M_2 is a sample. Row 1 of M_1 and row 1 of M_2 are samples where we want to compare their variances.
+
+#### Sample Size = 5,50
+
+```{r}
+
+n_1 <- 5
+n_2 <- 50
+df_1 <- n_1 - 1
+df_2 <- n_2 - 1
+sigma2_1 <- 6
+sigma2_2 <- 3
+N <- 10000
+M_1 <- as.data.frame(matrix(
+  data = rnorm(
+    n = N*n_1,
+    sd = sqrt(sigma2_1)
+  ),
+  ncol = n_1
+))
+M_2 <- as.data.frame(matrix(
+  data = rnorm(
+    n = N*n_2,
+    sd = sqrt(sigma2_2)
+  ),
+  ncol = n_2
+))
+var_1 <- apply(
+  X = M_1,
+  FUN = var,
+  MARGIN = 1
+)
+var_2 <- apply(
+  X = M_2,
+  FUN = var,
+  MARGIN = 1
+)
+hist((var_1/sigma2_1)/(var_2/sigma2_2))
+x <- seq(
+  from = min((var_1/sigma2_1)/(var_2/sigma2_2)),
+  to = max((var_1/sigma2_1)/(var_2/sigma2_2)),
+  length = 100
+)
+plot(
+  x = x,
+  y = df(
+    x = x,
+    df1 = df_1,
+    df2 = df_2
+  ),
+  main = "F-distribution with 5,50 degrees of freedom",
+  type = "l"
+)
+
+ 
+```
+
+#### Sample Size = 5,10
+
+```{r}
+
+n_1 <- 5
+n_2 <- 10
+df_1 <- n_1 - 1
+df_2 <- n_2 - 1
+sigma2_1 <- 6
+sigma2_2 <- 3
+N <- 10000
+M_1 <- as.data.frame(matrix(
+  data = rnorm(
+    n = N*n_1,
+    sd = sqrt(sigma2_1)
+  ),
+  ncol = n_1
+))
+M_2 <- as.data.frame(matrix(
+  data = rnorm(
+    n = N*n_2,
+    sd = sqrt(sigma2_2)
+  ),
+  ncol = n_2
+))
+var_1 <- apply(
+  X = M_1,
+  FUN = var,
+  MARGIN = 1
+)
+var_2 <- apply(
+  X = M_2,
+  FUN = var,
+  MARGIN = 1
+)
+hist((var_1/sigma2_1)/(var_2/sigma2_2))
+x <- seq(
+  from = min((var_1/sigma2_1)/(var_2/sigma2_2)),
+  to = max((var_1/sigma2_1)/(var_2/sigma2_2)),
+  length = 100
+)
+plot(
+  x = x,
+  y = df(
+    x = x,
+    df1 = df_1,
+    df2 = df_2
+  ),
+  main = "F-distribution with 5,10 degrees of freedom",
+  type = "l"
+)
+
+ 
+```
+
+#### Sample Size = 6,24
+
+```{r}
+
+n_1 <- 5
+n_2 <- 50
+df_1 <- n_1 - 1
+df_2 <- n_2 - 1
+sigma2_1 <- 6
+sigma2_2 <- 3
+N <- 10000
+M_1 <- as.data.frame(matrix(
+  data = rnorm(
+    n = N*n_1,
+    sd = sqrt(sigma2_1)
+  ),
+  ncol = n_1
+))
+M_2 <- as.data.frame(matrix(
+  data = rnorm(
+    n = N*n_2,
+    sd = sqrt(sigma2_2)
+  ),
+  ncol = n_2
+))
+var_1 <- apply(
+  X = M_1,
+  FUN = var,
+  MARGIN = 1
+)
+var_2 <- apply(
+  X = M_2,
+  FUN = var,
+  MARGIN = 1
+)
+hist((var_1/sigma2_1)/(var_2/sigma2_2))
+x <- seq(
+  from = min((var_1/sigma2_1)/(var_2/sigma2_2)),
+  to = max((var_1/sigma2_1)/(var_2/sigma2_2)),
+  length = 100
+)
+plot(
+  x = x,
+  y = df(
+    x = x,
+    df1 = df_1,
+    df2 = df_2
+  ),
+  main = "F-distribution with 6,24 degrees of freedom",
+  type = "l"
+)
+
+ 
+```
+
+#### Sample Size = 7,50
+
+```{r}
+
+n_1 <- 7
+n_2 <- 50
+df_1 <- n_1 - 1
+df_2 <- n_2 - 1
+sigma2_1 <- 6
+sigma2_2 <- 3
+N <- 10000
+M_1 <- as.data.frame(matrix(
+  data = rnorm(
+    n = N*n_1,
+    sd = sqrt(sigma2_1)
+  ),
+  ncol = n_1
+))
+M_2 <- as.data.frame(matrix(
+  data = rnorm(
+    n = N*n_2,
+    sd = sqrt(sigma2_2)
+  ),
+  ncol = n_2
+))
+var_1 <- apply(
+  X = M_1,
+  FUN = var,
+  MARGIN = 1
+)
+var_2 <- apply(
+  X = M_2,
+  FUN = var,
+  MARGIN = 1
+)
+hist((var_1/sigma2_1)/(var_2/sigma2_2))
+x <- seq(
+  from = min((var_1/sigma2_1)/(var_2/sigma2_2)),
+  to = max((var_1/sigma2_1)/(var_2/sigma2_2)),
+  length = 100
+)
+plot(
+  x = x,
+  y = df(
+    x = x,
+    df1 = df_1,
+    df2 = df_2
+  ),
+  main = "F-distribution with 7,50 degrees of freedom",
+  type = "l"
+)
+
+ 
+```
+
+#### Sample Size = 8,80
+
+```{r}
+
+n_1 <- 8
+n_2 <- 80
+df_1 <- n_1 - 1
+df_2 <- n_2 - 1
+sigma2_1 <- 6
+sigma2_2 <- 3
+N <- 10000
+M_1 <- as.data.frame(matrix(
+  data = rnorm(
+    n = N*n_1,
+    sd = sqrt(sigma2_1)
+  ),
+  ncol = n_1
+))
+M_2 <- as.data.frame(matrix(
+  data = rnorm(
+    n = N*n_2,
+    sd = sqrt(sigma2_2)
+  ),
+  ncol = n_2
+))
+var_1 <- apply(
+  X = M_1,
+  FUN = var,
+  MARGIN = 1
+)
+var_2 <- apply(
+  X = M_2,
+  FUN = var,
+  MARGIN = 1
+)
+hist((var_1/sigma2_1)/(var_2/sigma2_2))
+x <- seq(
+  from = min((var_1/sigma2_1)/(var_2/sigma2_2)),
+  to = max((var_1/sigma2_1)/(var_2/sigma2_2)),
+  length = 100
+)
+plot(
+  x = x,
+  y = df(
+    x = x,
+    df1 = df_1,
+    df2 = df_2
+  ),
+  main = "F-distribution with 8,80 degrees of freedom",
+  type = "l"
+)
+
+# As the sample sizes increase, the density of the F-distrubution increases.
+```

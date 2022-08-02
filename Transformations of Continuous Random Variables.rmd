@@ -1,0 +1,75 @@
+---
+title: "Transformations of Continuous Random Variables"
+author: "Brandon Parmanand"
+date: '2022-07-27'
+output: html_document
+---
+
+## Take your data set from the first assignment of our course. Find a numeric column that interests you.
+
+```{r}
+setwd("C:/Users/brand/OneDrive/Documents/GitHub/Prob&Stats")
+getwd()
+movies.df <- read.csv("movies.csv")
+movies.df <- na.omit(movies.df)
+library(car)
+
+```
+
+
+## Plot a histogram of the column of data. Clearly label your plot with "raw data".
+
+```{r}
+Runtime = movies.df$runtime
+hist(x = Runtime, main = "raw data")
+```
+
+
+## Plot a histogram of your data after center and scaling. Clearly label your plot "center and scale". Comment on how your transformed data is different from your original data.
+
+```{r}
+Runtime_Center_Scale = scale(Runtime)
+hist(x = Runtime_Center_Scale, main = "center and scale")
+# Now the data includes negative numbers but it's based around 0 on histogram
+```
+
+
+## Plot a histogram of your data after transforming the range to $[0,1]$. Clearly label your plot "rescale". Comment on how your transformed data is different from your original data.
+
+
+```{r}
+Runtime_Rescale = scales::rescale(Runtime)
+hist(x = Runtime_Rescale, main = "rescale")
+# Looks similar but values are closer to 0 than 1
+```
+## Plot a histogram of your data after applying a log-transform. Clearly label your plot "log-transform". If your data has negative or zero values, rescale your data first. Comment on how your transformed data is different from your original data.
+
+
+```{r}
+Runtime_Log_Transform = log(Runtime)
+hist(x = Runtime_Log_Transform, main = "log-transform")
+# Histogram looks much more bell shaped than original
+```
+## Plot a histogram of your data after applying a square-root transform. Clearly label your plot "square-root transform". If your data has negative values, rescale your data first. Comment on how your transformed data is different from your original data.
+
+```{r}
+Runtime_Sqrt = sqrt(Runtime)
+hist(x = Runtime_Sqrt, main = "square-root transform")
+# Histogram looks similar to raw data 
+```
+## Plot a histogram of your data after applying a power-transform. Clearly label your plot with the family parameter you used. Comment on how your transformed data is different from your original data.
+
+```{r}
+v <- as.numeric(Runtime)
+
+car::powerTransform(v, family = "bcPower")
+
+hist((v^-1.39 - 1) / -1.39, main = "bcPower transform")
+# Histogram is very bell shaped 
+```
+
+
+
+
+
+

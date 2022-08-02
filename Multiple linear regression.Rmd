@@ -1,0 +1,149 @@
+---
+title: "Multiple linear regression"
+author: "Brandon Parmanand"
+date: "July 31, 2022"
+output: html_document
+---
+
+Let's create a linear model with one target variable and multiple predictor variables.
+
+```{r}
+options(
+  digits = 2
+)
+```
+
+# Load the data
+
+
+```{r}
+setwd("C:/Users/brand/OneDrive/Documents/GitHub/Prob&Stats")
+getwd()
+
+movies <- read.csv("movies.csv")
+movies <- na.omit(movies)
+# rownames(movies) <- movies$title
+head(movies)
+```
+
+# Define plot colors
+
+```{r}
+v <- seq(
+  from = min(movies$audience_score),
+  to = max(movies$audience_score),
+  by = 1
+)
+v_color <- viridis::viridis(
+  n = length(v)
+)
+names(v_color) <- v
+movies$color <- v_color[as.character(movies$audience_score)]
+```
+
+# Explore the multivariate data
+
+```{r}
+movies$binary_best_pic_nom <- ifelse(movies$best_pic_nom=="yes",1,0)
+pairs(
+  formula = audience_score~imdb_rating+runtime+critics_score+imdb_num_votes+binary_best_pic_nom,
+  data = movies,
+  col = movies$color,
+  pch = 19
+)
+boxplot(
+  formula = audience_score ~ binary_best_pic_nom,
+  data = movies,
+  col = "steelblue"
+)
+rug(
+  x = jitter(movies$audience_score[movies$binary_best_pic_nom == 0]),
+  side = 2
+)
+rug(
+  x = jitter(movies$audience_score[movies$binary_best_pic_nom == 1]),
+  side = 4
+)
+```
+
+```{r}
+lm_4 <- lm(
+  formula = audience_score~imdb_rating+runtime+critics_score+imdb_num_votes+binary_best_pic_nom,
+  data = movies
+)
+summary(
+  object = lm_4
+)
+anova(
+  object = lm_4
+)
+plot(
+  x = lm_4,
+  which = 1:6,
+  bg = movies$color,
+  pch = 21
+)
+
+lm_3 <- update(
+  object = lm_4,
+  formula = ~. - binary_best_pic_nom
+)
+summary(
+  object = lm_3
+)
+anova(
+  object = lm_3
+)
+anova(lm_3,lm_4)
+plot(
+  x = lm_3,
+  which = 1:6,
+  bg = movies$color,
+  pch = 21
+)
+```
+
+# Wait, how many hypothesis tests are there?
+
+The summary() function evaluates the hypothesis that a coefficient equals zero.
+
+The anova() function compares models to each other. There are always at least two models in an anova() test.
+
+Notice that the only difference between these linear models is the order of the predictor variables in the formulas.
+
+```{r}
+lm_dfes <- lm(
+  formula = audience_score~imdb_rating+runtime+critics_score+imdb_num_votes+binary_best_pic_nom,
+  data = movies
+)
+lm_sefd <- lm(
+  formula = audience_score~binary_best_pic_nom+imdb_num_votes+critics_score+runtime+imdb_rating,
+  data = movies
+)
+```
+
+## summary()
+
+The summary() function evaluates if a coefficient equals zero. Order within the formula does not matter.
+
+```{r}
+summary(
+  object = lm_dfes
+)
+summary(
+  object = lm_sefd
+)
+```
+
+## anova()
+
+The anova() function two models, one of the model's predictor variables are a subset of the other's predictor variables. The hypothesis test is evaluating if adding a predictor variable is worth the additional complexity in the model.
+
+```{r}
+anova(
+  object = lm_dfes
+)
+anova(
+  object = lm_sefd
+)
+```

@@ -1,0 +1,225 @@
+---
+title: "Student's t-distribution"
+author: "Brandon Parmanand"
+date: "july, 29 2022"
+output: html_document
+---
+### Assignment:
+#### Simulate taking random samples of independent identically distributed random variables. In the code, each row of M is a sample.
+
+#### Sample Size = 2
+
+```{r}
+
+sample_size <- 2
+population_mean <- 10
+population_variance <- 5
+M <- as.data.frame(matrix(
+  data = rnorm(
+    n = (1000)*(sample_size),
+    mean = population_mean,
+    sd = sqrt(population_variance)
+  ),
+  ncol = sample_size
+))
+n <- ncol(M)
+df <- n - 1
+dim(M)
+x_bar <- rowMeans(M)
+v_sd <- apply(
+  X = M,
+  FUN = sd,
+  MARGIN = 1
+)
+v_t <- sqrt(n)*(x_bar - population_mean)/v_sd
+hist(v_t)
+x <- seq(
+  from = min(v_t),
+  to = max(v_t),
+  length = 100
+)
+plot(
+  x = x,
+  dt(
+    x = x,
+    df = df
+  ),
+  main = "t-distribution with n = 2",
+  type = "l"
+)
+
+```
+
+#### Sample Size = 5
+
+```{r}
+
+sample_size <- 5
+population_mean <- 10
+population_variance <- 5
+M <- as.data.frame(matrix(
+  data = rnorm(
+    n = (1000)*(sample_size),
+    mean = population_mean,
+    sd = sqrt(population_variance)
+  ),
+  ncol = sample_size
+))
+n <- ncol(M)
+df <- n - 1
+dim(M)
+x_bar <- rowMeans(M)
+v_sd <- apply(
+  X = M,
+  FUN = sd,
+  MARGIN = 1
+)
+v_t <- sqrt(n)*(x_bar - population_mean)/v_sd
+hist(v_t)
+x <- seq(
+  from = min(v_t),
+  to = max(v_t),
+  length = 100
+)
+plot(
+  x = x,
+  dt(
+    x = x,
+    df = df
+  ),
+  main = "t-distribution with n = 5",
+  type = "l"
+)
+
+```
+
+#### Sample Size = 10
+
+```{r}
+
+sample_size <- 10
+population_mean <- 10
+population_variance <- 5
+M <- as.data.frame(matrix(
+  data = rnorm(
+    n = (1000)*(sample_size),
+    mean = population_mean,
+    sd = sqrt(population_variance)
+  ),
+  ncol = sample_size
+))
+n <- ncol(M)
+df <- n - 1
+dim(M)
+x_bar <- rowMeans(M)
+v_sd <- apply(
+  X = M,
+  FUN = sd,
+  MARGIN = 1
+)
+v_t <- sqrt(n)*(x_bar - population_mean)/v_sd
+hist(v_t)
+x <- seq(
+  from = min(v_t),
+  to = max(v_t),
+  length = 100
+)
+plot(
+  x = x,
+  dt(
+    x = x,
+    df = df
+  ),
+  main = "t-distribution with n = 10",
+  type = "l"
+)
+
+```
+
+#### Sample Size = 30
+
+```{r}
+
+sample_size <- 30
+population_mean <- 10
+population_variance <- 5
+M <- as.data.frame(matrix(
+  data = rnorm(
+    n = (1000)*(sample_size),
+    mean = population_mean,
+    sd = sqrt(population_variance)
+  ),
+  ncol = sample_size
+))
+n <- ncol(M)
+df <- n - 1
+dim(M)
+x_bar <- rowMeans(M)
+v_sd <- apply(
+  X = M,
+  FUN = sd,
+  MARGIN = 1
+)
+v_t <- sqrt(n)*(x_bar - population_mean)/v_sd
+hist(v_t)
+x <- seq(
+  from = min(v_t),
+  to = max(v_t),
+  length = 100
+)
+plot(
+  x = x,
+  dt(
+    x = x,
+    df = df
+  ),
+  main = "t-distribution with n = 30",
+  type = "l"
+)
+
+```
+
+#### Sample Size = 100
+
+```{r}
+
+sample_size <- 100
+population_mean <- 10
+population_variance <- 5
+M <- as.data.frame(matrix(
+  data = rnorm(
+    n = (1000)*(sample_size),
+    mean = population_mean,
+    sd = sqrt(population_variance)
+  ),
+  ncol = sample_size
+))
+n <- ncol(M)
+df <- n - 1
+dim(M)
+x_bar <- rowMeans(M)
+v_sd <- apply(
+  X = M,
+  FUN = sd,
+  MARGIN = 1
+)
+v_t <- sqrt(n)*(x_bar - population_mean)/v_sd
+hist(v_t)
+x <- seq(
+  from = min(v_t),
+  to = max(v_t),
+  length = 100
+)
+plot(
+  x = x,
+  dt(
+    x = x,
+    df = df
+  ),
+  main = "t-distribution with n = 100",
+  type = "l"
+)
+
+```
+
+## As the sample size goes from 2 to 5, the distribution becomes wider but every sample size after 5 you do not see a great difference

@@ -1,0 +1,47 @@
+---
+title: "Hypothesis testing - type I and type II errors"
+author: "Brandon Parmanand"
+date: "july, 30 2022"
+output: html_document
+---
+### Assignment:
+
+#### Set your type I error risk tolerance (alpha) to 0.05.
+
+#### Identify the distribution of a sample mean from standard normal with sample size of 30.
+
+#### Use qnorm() to identify the cutoff for testing
+
+#### * Ho: $\mu \ge 0$
+#### * Ha: $\mu < 0$
+
+#### Use R to randomly generate 1,000 standard normal samples.  Each sample is size 30.
+
+#### What fraction of samples give a sample average greater than the cutoff?
+
+#### Plot a histogram of your sample averages.
+
+ 
+
+```{r}
+
+alpha = 0.05
+n <- 30
+mu <- 0
+sigma <- 1/sqrt(n)
+
+qnorm(p = 0.05, mean = 0, sd = sigma)
+
+M <- matrix(data = rnorm(n = 1000*n), nrow = 1000, ncol = n)
+
+head(M)
+
+M_Means <- rowMeans(M)
+
+sum(M_Means < qnorm(p=0.05, mean=0, sd=sigma))
+
+hist(M_Means)
+
+```
+
+## About %5 of the samples give a sample average greater than the cutoff

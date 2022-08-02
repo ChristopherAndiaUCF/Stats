@@ -1,0 +1,71 @@
+---
+title: "Bernoulli Distribution"
+author: "Brandon Parmanand"
+date: '2022-07-28'
+output: html_document
+---
+
+
+### Assignment
+
+#### Find an event that has two possible outcomes, and that you can observe repeatedly. Such as flipping heads on a coin, rolling snake-eyes on two dice, etc.
+
+##### Observe the event at least 30 times. Record a success as a 1 and failure as 0.
+##### Compute the sample mean and the sample variance.
+##### Plot a histogram of your results.
+##### Use your observations to estimate $p$.
+##### Run the density, cumulative distribution function, quantile function and random number generation code with prob equal to your estimated $p$.
+##### Put your results in a document, upload your document to Canvas.
+
+```{r}
+setwd("C:/Users/brand/OneDrive/Documents/GitHub/Prob&Stats")
+getwd()
+
+library(readxl)
+x <- read_excel("coinflip.xlsx", col_names = FALSE)
+```
+
+
+```{r}
+coinflip <- as.numeric(x$...1)
+
+mean(coinflip)
+var(coinflip)
+
+hist(coinflip)
+
+table(coinflip)
+# p = P(X=1)
+p <- 16/30
+
+dbinom(
+  x = 0:1,
+  size = 1,
+  prob = p
+)
+
+pbinom(
+  q = c(
+    0,0.24,0.5,0.75,1
+  ),
+  size = 1,
+  prob = p
+)  
+
+qbinom(
+  p = c(
+    0,0.24,0.5,0.75,1
+  ),
+  size = 1,
+  prob = p
+)
+  
+  
+rbinom(
+  n = 30,
+  size = 1,
+  prob = p
+)
+  
+```
+

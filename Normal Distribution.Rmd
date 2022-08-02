@@ -1,0 +1,71 @@
+---
+title: "Normal Distribution"
+author: "Brandon Parmanand"
+date: "july, 29 2022"
+output: html_document
+---
+### Assignment:
+
+### Generate at least 100 binomial random variables with n = 30, p = 1/2.
+
+### Convert the counts to proportions.
+
+### Plot the histogram of your proportions.
+
+### Run the shapiro.test() on your proportions.
+
+### How does your data compare to a normal random variable?
+
+
+```{r}
+n = 30
+p = 0.5
+x <- 0:100
+v_dbinom <- dbinom(
+  x = x,
+  size = n,
+  prob = p
+)
+
+v_dbinom.df <- as.data.frame(v_dbinom)
+v_dbinom.df$prop <- v_dbinom.df$v_dbinom / sum(v_dbinom.df$v_dbinom) 
+
+hist(v_dbinom.df$prop)
+
+v_dbinom <- v_dbinom.df$prop
+
+v_approximation <- rep(NA,length(x))
+
+
+```
+
+
+```{r}
+for(i in 1:length(x)){
+  p_upper <- pnorm(
+    q = x[i] + 0.5,
+    mean = n*p,
+    sd = sqrt(n*p*(1-p))
+  )
+  p_lower <- pnorm(
+    q = x[i] - 0.5,
+    mean = n*p,
+    sd = sqrt(n*p*(1-p))
+  )
+  v_approximation[i] <- p_upper - p_lower
+}
+barplot(
+  formula = v_dbinom ~ x,
+  main = "Barplot of correct probabilities",
+  ylab = ""
+)
+```
+
+
+
+```{r}
+shapiro.test(v_approximation)
+```
+
+### The data compares well to a normal distribution. The barplot shows you that it is nearly identical
+

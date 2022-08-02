@@ -1,0 +1,89 @@
+---
+title: " Binomial Distribution"
+author: "Brandon Parmanand"
+date: "July 31, 2022"
+output: html_document
+---
+### Assignment:
+
+#### Problem 4.40
+#### A ball is drawn from an urn containing 3 white and 3 black balls. After the ball is drawn, it is replaced and another ball is drawn. This process goes on indefinitely. What is the probability that of the first 4 balls drawn, exactly 2 are white?
+
+
+
+```{r}
+
+dbinom(
+  x=2,
+  size=4,
+  prob=0.5)
+
+```
+
+
+
+#### Problem 4.41
+#### On a multiple-choice exam with 3 possible answers for each of the 5 questions, what is the probability that a student will get 4 or more correct answers just by guessing? greater than or equal to prob=1/3 size=5 q=4 
+#### 
+```{r}
+pbinom(
+  q=4,
+  size=5,
+  prob=1/3,
+  lower.tail = FALSE)
+```
+
+#### Problem 4.42
+#### A man claims to have extrasensory perception. As a test, a fair coin is flipped 10 times and the man is asked to predict the outcome in advance. He gets 7 out of 10 correct. What is the probability that he would have done at least this well if he did not have ESP?
+
+```{r}
+
+pbinom(
+  q=7,
+  size=10,
+  prob=0.5,
+  lower.tail = FALSE)
+```
+
+#### Problem 4.43
+#### A and B will take the same 10-question examination. Each question will be answered correctly by A with probability .7, independently both of her results on other questions. Each question will be answered correctly by B with probability .4, independently both of her results on the other questions and on the performance of A.
+#### a. Find the expected number of questions that are answered correctly by both A and B. n=10 P(A)=.7 P(B)=.4 quantile=.5
+#### b. Find the variance of the number of questions that are answered correctly by either A or B. 
+#### size=10 P(A)=.7 P(B)=.4 quantile=.5
+#### V(X)=np(1−p)
+
+```{r}
+v.successA <- qbinom(
+  p=.5,
+  size=10,
+  prob=.7)
+v.successB <- qbinom(
+  p=.5,
+  size=10,
+  prob=.4)
+mean(v.successA)+mean(v.successB)
+varA <- 10 * (.7 * (1-.7))
+print(varA)
+varB <- 10 * (.4 * (1-.4))
+print(varB)
+mean(varA, varB)
+```
+
+#### Problem 4.44
+#### A communications channel transmits the digits 0 and 1. However, due to static, the digit transmitted is incorrectly received with probability .2. Suppose that we want to transmit an important message consisting of one binary digit. To reduce the chance of error, we transmit 00000 instead of 0 and 11111 instead of 1. If the receiver of the message uses “majority” decoding, what is the probability that the message will be wrong when decoded? What independence assumptions are you making?
+#### Probability of incorrectly using one digit =0.2. See code for other assumptions
+
+
+```{r}
+
+pbinom(
+  q=3, 
+  size=5, 
+  prob=.2, 
+  lower.tail = FALSE)
+
+```
+
+
+
+

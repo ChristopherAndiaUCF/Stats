@@ -1,0 +1,93 @@
+---
+title: "Negative-Binomial distribution"
+author: "Brandon Parmanand"
+date: '2022-07-28'
+output: html_document
+---
+
+
+### Assignment
+
+#### Select a negative binomial event that you can easily do repeatedly. Set the number of successes to 3. Determine which event is a success, which event is a failure.
+#### Run your event until your 3rd success. Record the number of trials (or failures). Repeat this until you have thirty or more observations.
+#### Make a table of your data.
+#### Plot a histogram of your data.
+#### Use your sample and the population expected value to estimate p.
+#### Use your estimated value of p to create a bar plot showing the density of the random variable. How does your data bar plot compare to your density bar plot?
+#### Run the example R code above with your estimated p as the probability.
+
+```{r}
+
+setwd("C:/Users/brand/OneDrive/Documents/GitHub/Prob&Stats")
+getwd()
+
+library(readxl)
+x <- read_excel("threesuccess.xlsx", col_names = TRUE)
+
+```
+
+The Bar Plots are identical but instead of decreasing bar heights, they are increasing
+
+```{r}
+
+coinflip <- as.numeric(x$Failures)
+
+failure_tbl <- table(coinflip)
+
+barplot(failure_tbl, main="Counts of Failures Before 3 Successs of Flipping Heads",
+        xlab = "# of Failures before Flipping 3 Heads")
+
+mean <- mean(coinflip)
+
+# E(X) = r(1-p)/p
+# E(X)= sample mean = 0.9333 
+# r= # of sucesses = 3
+# 2.7 = 3(1-p)/p
+p = 0.5263
+
+
+density_tbl <- table(dnbinom(
+x = coinflip,
+size = 3,
+prob = p
+))
+
+barplot(density_tbl, main="Density Barlplot",
+        xlab = "Density of Failures before Flipping 3 Heads")
+
+
+
+
+```
+
+### 
+
+```{r}
+dnbinom(
+  x = 0:20,
+  size = 5,
+  prob = p
+)
+
+pnbinom(
+  q = 0:20,
+  size = 5,
+  prob = p
+)
+
+qnbinom(
+  p =c(
+    0,0.25,0.5,0.75,1
+  ),
+  size = 5,
+  prob = p
+)
+
+rnbinom(
+  n = 100,
+  size = 5,
+  prob = p
+)
+  
+```
+

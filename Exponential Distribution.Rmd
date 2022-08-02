@@ -1,0 +1,66 @@
+---
+title: "Exponential Distribution"
+author: "Brandon Parmanand"
+date: "july, 29 2022"
+output: html_document
+---
+### For this assignment you are going to use your Poisson data results to analyze the corresponding exponential distribution.
+### Set rate = x_bar where x_bar is your sample average from your Poisson assignment.
+### Use dexp() to get the density for the numbers in [0, 10/rate]. Plot the density.
+### Use pexp() to get the cumulative distribution for the integers in [0, 10/rate]. Plot the cdf.
+### Use qexp() to get the quantile of your density. 0,0.25,0.5,0.75,1
+
+
+### Density 
+
+```{r}
+rate <- 4.15
+v <- seq(
+  from = 0,
+  to = 10/rate,
+  by = 0.01
+)
+dexp_v <- dexp(
+  x = v,
+  rate = rate
+)
+plot(
+  x = v,
+  y = dexp_v,
+  type = "l",
+  main = "Probability density function of exponential distribution\n mean = 4.15"
+)
+
+```
+
+### Cumulative Distribution
+
+```{r}
+pexp_v <- pexp(
+  q = seq(
+    from = 0,
+    to = 10/rate,
+    by = 0.01
+  ),
+  rate = rate
+)
+plot(
+  x = v,
+  y = pexp_v,
+  type = "l",
+  main = "Cumulative distribution function of exponential distribution\n mean = 4.15"
+)
+```
+
+### Quantile of Density
+
+```{r}
+qexp(
+  p = c(
+    0,0.25,0.5,0.75,1
+  ),
+  rate = rate
+)
+```
+
+

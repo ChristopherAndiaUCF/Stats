@@ -1,0 +1,49 @@
+---
+title: " Uniform Distribution"
+author: "Brandon Parmanand"
+date: "July 31, 2022"
+output: html_document
+---
+### Assignment:
+#### Use runif() and qexp() to randomly generate 100 exponential random variables with parameter = 10. Do not use rexp().
+
+#### Use runif() and qgamma() to randomly generate 100 gamma random variables with parameters = 10 and 10. Do not use rgamma().
+
+#### Use runif() and qnorm() to randomly generate 100 standard normal random variables. Do not use rnorm().
+
+#### Use runif() and qlnorm() to randomly generate 100 standard log-normal random variables. Do not use rlnorm().
+
+
+```{r}
+x <- runif(n = 100)
+
+qexp(
+  p = x,
+  rate = 10
+)
+```
+
+```{r}
+x <- runif(n = 100)
+
+qgamma(
+  p = x,
+  shape = 10,
+  rate = 10)
+```
+
+```{r}
+
+x <- runif(n = 100)
+
+qnorm(p = x)
+
+x <- runif(n = 100)
+
+qlnorm(p = x)
+
+
+
+```
+
+

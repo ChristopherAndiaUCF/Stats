@@ -1,0 +1,54 @@
+---
+title: " Confidence intervals"
+author: "Brandon Parmanand"
+date: "July 31, 2022"
+output: html_document
+---
+### Assignment:
+
+### Find a data set that interests you. Select a numeric column of data that you find interesting, and appears to be normally distributed.
+
+### Plot the data's histogram to show that the data appears to be normally distributed. If the histogram does not look like a bell curve, get different data.
+
+### Compute the sample mean.
+
+### Compute the 95% confidence interval.
+
+### Select a number in the interval that is simpler than the sample mean. For example, if the sample mean is 2.4421892, and 2.5 is in your confidence interval just use 2.5 as the estimate of the population average. In the t.test() function, set the mu parameter to your selected number.
+
+### Use your confidence interval to run the hypothesis test:
+
+
+
+```{r}
+options(
+  digits = 2
+)
+```
+
+# Load the data
+
+
+```{r}
+setwd("C:/Users/brand/OneDrive/Documents/GitHub/Prob&Stats")
+getwd()
+
+movies <- read.csv("movies.csv")
+movies <- na.omit(movies)
+# rownames(movies) <- movies$title
+head(movies)
+
+hist(movies$audience_score)
+
+sample_mean <- mean(movies$audience_score)
+
+t.test(
+  x = movies$audience_score,
+  alternative = "two.sided",
+  mu = 62
+)
+
+```
+
+### I am 95% confident that the population mean is in the interval. We fail to reject the two-sided null hyothesis of equality since the hypothesized value is in the interval of 61 ,64.
+

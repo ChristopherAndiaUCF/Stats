@@ -1,0 +1,175 @@
+---
+title: "Chi-squared distribution"
+author: "Brandon Parmanand"
+date: "july, 29 2022"
+output: html_document
+---
+### Assignment:
+#### Simulate taking random samples of independent identically distributed random variables. In the code, each row of M is a sample.
+
+
+#### Sample Size = 5
+
+```{r}
+
+sample_size <- 5
+population_variance <- 10
+M <- as.data.frame(matrix(
+  data = rnorm(
+    n = (10000)*(sample_size),
+    sd = sqrt(population_variance)
+  ),
+  nrow = 10000,
+  ncol = sample_size
+))
+n <- ncol(M)
+df <- n - 1
+dim(M)
+v_var <- apply(
+  X = M,
+  FUN = var,
+  MARGIN = 1
+)
+hist(
+  x = (n - 1)*v_var/population_variance
+)
+x <- seq(
+  from = (n - 1)*min(v_var)/population_variance,
+  to = (n - 1)*max(v_var)/population_variance,
+  by = 0.1
+)
+plot(
+  x = x,
+  y = dchisq(
+    x = x,
+    df = df
+  ),
+  main = "Density of chi-squared distribution with n = 5",
+  type = "l"
+)
+```
+
+#### Sample Size = 10
+
+```{r}
+
+sample_size <- 10
+population_variance <- 10
+M <- as.data.frame(matrix(
+  data = rnorm(
+    n = (10000)*(sample_size),
+    sd = sqrt(population_variance)
+  ),
+  nrow = 10000,
+  ncol = sample_size
+))
+n <- ncol(M)
+df <- n - 1
+dim(M)
+v_var <- apply(
+  X = M,
+  FUN = var,
+  MARGIN = 1
+)
+hist(
+  x = (n - 1)*v_var/population_variance
+)
+x <- seq(
+  from = (n - 1)*min(v_var)/population_variance,
+  to = (n - 1)*max(v_var)/population_variance,
+  by = 0.1
+)
+plot(
+  x = x,
+  y = dchisq(
+    x = x,
+    df = df
+  ),
+  main = "Density of chi-squared distribution with n = 10",
+  type = "l"
+)
+```
+
+#### Sample Size = 30
+
+```{r}
+
+sample_size <- 30
+population_variance <- 10
+M <- as.data.frame(matrix(
+  data = rnorm(
+    n = (10000)*(sample_size),
+    sd = sqrt(population_variance)
+  ),
+  nrow = 10000,
+  ncol = sample_size
+))
+n <- ncol(M)
+df <- n - 1
+dim(M)
+v_var <- apply(
+  X = M,
+  FUN = var,
+  MARGIN = 1
+)
+hist(
+  x = (n - 1)*v_var/population_variance
+)
+x <- seq(
+  from = (n - 1)*min(v_var)/population_variance,
+  to = (n - 1)*max(v_var)/population_variance,
+  by = 0.1
+)
+plot(
+  x = x,
+  y = dchisq(
+    x = x,
+    df = df
+  ),
+  main = "Density of chi-squared distribution with n = 30",
+  type = "l"
+)
+```
+
+#### Sample Size = 100
+
+```{r}
+
+sample_size <- 100
+population_variance <- 10
+M <- as.data.frame(matrix(
+  data = rnorm(
+    n = (10000)*(sample_size),
+    sd = sqrt(population_variance)
+  ),
+  nrow = 10000,
+  ncol = sample_size
+))
+n <- ncol(M)
+df <- n - 1
+dim(M)
+v_var <- apply(
+  X = M,
+  FUN = var,
+  MARGIN = 1
+)
+hist(
+  x = (n - 1)*v_var/population_variance
+)
+x <- seq(
+  from = (n - 1)*min(v_var)/population_variance,
+  to = (n - 1)*max(v_var)/population_variance,
+  by = 0.1
+)
+plot(
+  x = x,
+  y = dchisq(
+    x = x,
+    df = df
+  ),
+  main = "Density of chi-squared distribution with n = 100",
+  type = "l"
+)
+```
+
+## As the sample size grows, the distribution becomes more normal

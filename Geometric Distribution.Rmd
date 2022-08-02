@@ -1,0 +1,91 @@
+---
+title: "Geometric distribution"
+author: "Brandon Parmanand"
+date: '2022-07-28'
+output: html_document
+---
+
+
+### Assignment
+
+#### Select a Bernoulli event that you can easily do repeatedly. Determine which event is a success, which event is a failure.
+#### Run your event until your first success. Recorde the number of trials (or failures). Repeat this until you have thirty or more observations.
+#### Make a table of your data.
+#### Plot a bar plot of your data.
+#### Use your sample mean and the expected value to estimate p.
+#### Use your estimated value of p to create a bar plot showing the density of a geometric random variable. How does your data bar plot compare to your density bar plot?
+#### Run the example R code above with your estimated p as the probability.
+
+```{r}
+setwd("C:/Users/brand/OneDrive/Documents/GitHub/Prob&Stats")
+getwd()
+
+library(readxl)
+x <- read_excel("coinfailures.xlsx", col_names = TRUE)
+```
+
+The Bar Plots are identical but instead of decreasing bar heights, they are increasing
+
+```{r}
+
+coinflip <- as.numeric(x$Failures)
+
+failure_tbl <- table(coinflip)
+
+barplot(failure_tbl, main="BarPlot of Counts of Failures Before Flipping Heads",
+        xlab = "# of Failures before Flipping Heads")
+
+mean <- mean(coinflip)
+
+# E(X) = (1-p)/p
+# E(X)= sample mean = 0.9333 
+# 0.9333 = (1-p)/p
+p = 0.5173 
+
+
+density_tbl <- table(dgeom(
+  x = coinflip,
+  prob = p
+))
+
+barplot(density_tbl, main="Density Barlplot",
+        xlab = "Density of  Failures before Flipping Heads")
+
+```
+
+### 
+
+```{r}
+dgeom(
+  x = 0:10,
+  prob = p
+  )
+
+
+pgeom(
+  q =0:10,
+  prob = p
+)
+
+
+qgeom(
+  p = c(
+    0,0.25,0.5,0.75,1
+  ),
+  prob = p
+)
+
+
+rgeom(
+  n = 100,
+  prob = p
+)
+
+
+# p <- 13/30
+# q <- 1-p
+# 
+# EV <- q/p
+  
+```
+

@@ -1,0 +1,30 @@
+---
+title: " Maximum likelihood estimators"
+author: "Brandon Parmanand"
+date: "July 31, 2022"
+output: html_document
+---
+### Assignment:
+
+#### 3  3  3  3  4  5  5  9 11 12
+
+#### Assume that this data is independent, identically distributed from a exponential distribution. Use the maximum likelihood to estimate the parameter..
+
+
+```{r}
+v_exp <- c(3,3,3,3,4,5,5,9,11,12)
+x_bar <- mean(
+  v_exp
+)
+n <- length(
+  v_exp
+)
+lambda <- seq(
+  from = 1,
+  to = 10,
+  length = 1000
+)
+L <- lambda^(n*x_bar)*exp(-n*lambda)
+lambda[which.max(L)]
+
+```

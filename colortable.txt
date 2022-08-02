@@ -1,0 +1,4 @@
+Letter blue green red
+     A   20    47  17
+     B   18    30  21
+     C   38    71  38

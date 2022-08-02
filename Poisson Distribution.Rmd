@@ -1,0 +1,58 @@
+---
+title: "Poisson Distribution"
+author: "Brandon Parmanand"
+date: "july, 29 2022"
+output: html_document
+---
+
+
+
+```{r}
+r <- rpois(
+  n = 100,
+  lambda = 4
+)
+
+hist(r, main = " Histogram of 100 Random Poisson observations")
+```
+
+```{r}
+lamda <- 4
+lamda
+mean <- mean(r)
+mean
+var <- var(r)
+var
+```
+### Lambda, the mean, and the variance are all very close in value.
+
+
+# Density of a Poisson distribution
+
+```{r}
+dpois(
+  x = -10:10,
+  lambda = mean
+)
+```
+
+# Cumulative distribution function of a Poisson distribution
+
+```{r}
+ppois(
+  q = -10:10,
+  lambda = mean
+)
+```
+
+# Quantiles of a Poisson distribution
+
+```{r}
+qpois(
+  p = c(
+    0,0.25,0.5,0.75,1
+  ),
+  lambda = mean
+)
+```
+

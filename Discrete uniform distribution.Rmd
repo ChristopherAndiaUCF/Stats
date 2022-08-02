@@ -1,0 +1,44 @@
+---
+title: "Discrete uniform distribution"
+author: "Brandon Parmanand"
+date: '2022-07-29'
+output: html_document
+---
+
+
+### Assignment
+
+#### Get some dice. You may use the more exotic dice from a game store.
+
+#### Roll one die at least 30 times.
+
+#### Create a table with these columns:
+
+#### value 1-6, count, observed probabilities, discrete uniform probabilities, difference between the probabilities
+
+#### Plot a histogram of your observations
+
+```{r}
+
+setwd("C:/Users/brand/OneDrive/Documents/GitHub/Prob&Stats")
+getwd()
+
+library(readxl)
+
+
+```
+
+
+### One die was rolled 30 times. Number of outcomes for each possible outcomes were tabulated and probability of the outcome was calculated. Discrete unifrom probability was 16.7% and the difference was taken
+```{r}
+x <- read_excel("dieroll.xlsx", col_names = TRUE)
+x
+```
+
+### Here are the histograms of the data
+```{r}
+hist(x$Outcome, main = "Histogram of Outcomes")
+hist(x$Prob, main = "Histogram of Observed Probabilities")
+hist(x$Prob_Diff, main = "Histogram of Probabilities Differences")  
+```
+

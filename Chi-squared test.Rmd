@@ -1,0 +1,55 @@
+---
+title: "Log-normal Distribution"
+author: "Brandon Parmanand"
+date: "july, 29 2022"
+output: html_document
+---
+### Assignment:
+#### Find some data online that includes money, prices, expenses, etc.
+#### Plot the histogram of your data.
+#### Use your data to estimate the parameters of a log-normal distribution.
+#### Plot the estimated density of your log-normal distribution.
+#### How does your data compare to your density?
+
+
+```{r}
+v_sample <- c("C", "A", "C", "C", "C", "C", "C", "A", "A", "B", "C", "C", "A", "A", "C", "C", "C", "B", "B", "B", "B", "C", "C", "A", "A", "B", "C", "C", "C", "C")
+table(v_sample)
+
+chisq.test(
+  x = table(v_sample),
+  p = c(1/3,1/3,1/3)
+)
+
+```
+
+```{r}
+lettercolor <- read.csv("~/GitHub/Prob&Stats/lettercolor.txt", sep="")
+table(lettercolor)
+# In general, you want correct set to TRUE when your table is 2x2
+chisq.test(
+  x = table(lettercolor),
+  correct = TRUE
+)
+
+
+```
+
+```{r}
+colortable <- read.csv("~/GitHub/Prob&Stats/colortable.txt", sep="")
+row.names(colortable) <- colortable[,1]
+colortable <- subset(colortable, select = -Letter)
+colortable
+
+
+chisq.test(
+  x = colortable,
+  correct = FALSE
+)
+
+```
+
+
+
+
+

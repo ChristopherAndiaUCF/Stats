@@ -1,0 +1,35 @@
+---
+title: "Normal Distribution"
+author: "Brandon Parmanand"
+date: "july, 29 2022"
+output: html_document
+---
+### Assignment:
+
+### Generate at least 100 binomial random variables with n = 30, p = 1/2.
+
+### Convert the counts to proportions.
+
+### Plot the histogram of your proportions.
+
+### Run the shapiro.test() on your proportions.
+
+### How does your data compare to a normal random variable?
+
+
+```{r}
+
+x <- rbinom(
+  n=100,
+  size = 30,
+  prob=1/2)/30
+
+hist(x,
+     main = "Histogram of Proportions of Binomial Random Variables")
+
+shapiro.test(x)
+
+
+```
+
+#### Random binomial variables are a normal distribution. pvalue>0.05
